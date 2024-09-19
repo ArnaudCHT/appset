@@ -1,0 +1,27 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: test-guestbook
+spec:
+  goTemplate: true
+  generators:
+    - git:
+        repoURL: https://github.com/ArnaudCHT/appset.git
+        revision: main
+        files:
+        - path: "cluster/**/config.json"
+  template:
+    metadata:
+      name: '{{.cluster.name}}-test-nettools'
+    spec:
+      project: '{{ .config.project }}'
+      source:
+        repoURL: '{{ .config.repoURL }}'
+        targetRevision: '{{ .config.targetRevision }}'
+        path: app/nettools
+        helm:
+          valueFiles: 
+            - "../../clusters/{{ .cluster.name }}/values-nettools.yaml"
+      destination:
+        server: '{{.cluster.address}}'
+#        namespace: infra-argo

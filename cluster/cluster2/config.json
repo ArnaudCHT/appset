@@ -1,0 +1,13 @@
+{
+    "cluster": {
+      "name": "cluster2",
+      "address": "cluster2"
+    },
+    "config": {
+      "project": "exploitation",
+      "targetRevision": "main",
+      "repoUrl": "https://github.com/ArnaudCHT/appset.git",
+      "serverSideApply": "true",
+      "autoSync": "true"
+    }
+}

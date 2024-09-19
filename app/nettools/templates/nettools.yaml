@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: debug-tools
+  namespace: {{ include "nettools.namespace" . }}
+spec:
+  replicas: {{ .Values.replicas }}
+  selector:
+    matchLabels:
+      app: debug
+  template:
+    metadata:
+      labels:
+        app: debug
+    spec:
+      containers:
+        - name: debug
+          image: wbitt/network-multitool:latest # Sets Image
+          command: ["sleep", "1000"]
+          imagePullPolicy: "Always"
+          resources:
+            limits:
+              cpu: 250m
+              memory: 250Mi
