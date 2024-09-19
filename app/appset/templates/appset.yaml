@@ -37,10 +37,10 @@ spec:
       syncPolicy:
         syncOptions:
           - CreateNamespace=true
-    {{- if .config.serverSideApply }}
+    {{- if .ServerSideApply }}
           - ServerSideApply=true
     {{- end }}      
-    {{- if .config.autoSync }}
+    {{- if .prune }}
       syncPolicy:
         automated:
           prune: true
