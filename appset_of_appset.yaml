@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: test-guestbook
+  name: appset-of-appset
 spec:
   goTemplate: true
   generators:
@@ -25,3 +25,4 @@ spec:
       destination:
         server: '{{.cluster.address}}'
         namespace: infra-argo
+

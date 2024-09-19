@@ -31,10 +31,18 @@ spec:
             - "../../clusters/{{ .Values.appset.clustername }}/values-{{`{{`}} app {{`}}`}}.yaml"
       destination:
         namespace: "{{`{{`}} namespace {{`}}`}}"
+  templatePatch: |
+    spec:
+      source:
       syncPolicy:
         syncOptions:
           - CreateNamespace=true
-          - ServerSideApply="{{`{{`}} ServerSideApply {{`}}`}}"
+    {{- if .config.serverSideApply }}
+          - ServerSideApply=true
+    {{- end }}      
+    {{- if .config.autoSync }}
+      syncPolicy:
         automated:
-          prune: "{{`{{`}} prune {{`}}`}}"
-          selfHeal: "{{`{{`}} selfHeal {{`}}`}}"
+          prune: true
+          selfHeal: true
+    {{- end }}
