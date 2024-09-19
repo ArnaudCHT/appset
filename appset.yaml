@@ -16,7 +16,7 @@ spec:
     spec:
       project: '{{ .config.project }}'
       source:
-        repoURL: '{{ .config.repoURL }}'
+        repoURL: '{{ .config.repoUrl }}'
         targetRevision: '{{ .config.targetRevision }}'
         path: app/nettools
         helm:
