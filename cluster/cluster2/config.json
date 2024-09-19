@@ -1,7 +1,7 @@
 {
     "cluster": {
       "name": "cluster2",
-      "address": "cluster2"
+      "address": "https://kubernetes.default.svc"
     },
     "config": {
       "project": "exploitation",
