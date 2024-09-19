@@ -1,0 +1,40 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: {{ include "appset.fullname" . }}-{{ .Values.appset.clustername }}
+  namespace: {{ include "appset.namespace" . }}
+spec:
+  generators:
+    - list:
+        elements:
+        {{- range .Values.components }}
+        - app: {{ .name }}
+          namespace: {{ .namespace }}
+          branch: {{ .branch | default $.Values.appset.default.branch }}
+          repoUrl: {{ .repoUrl | default $.Values.appset.default.repoUrl }}
+          prune: {{ .syncPolicyPrune | default $.Values.appset.default.syncPolicy.prune }}
+          selfHeal: {{ .syncPolicySelfHeal | default $.Values.appset.default.syncPolicy.selfHeal }}
+          ServerSideApply: {{ .ServerSideApply | default $.Values.appset.default.ServerSideApply }}
+        {{- end }}
+  template:
+    metadata:
+      name: "{{`{{`}} app {{`}}`}}"
+    spec:
+      project: "{{ .Values.appset.argoProject }}"
+      source:
+        repoURL: "{{`{{`}} repoUrl {{`}}`}}"
+        targetRevision: "{{`{{`}} branch {{`}}`}}"
+        path: "apps/{{`{{`}} app {{`}}`}}" 
+        helm:
+          valueFiles: 
+            - "../../clusters/{{ .Values.appset.clustername }}/values-{{`{{`}} app {{`}}`}}.yaml"
+      destination:
+        namespace: "{{`{{`}} namespace {{`}}`}}"
+      syncPolicy:
+        syncOptions:
+          - CreateNamespace=true
+          - ServerSideApply="{{`{{`}} ServerSideApply {{`}}`}}"
+        automated:
+          prune: "{{`{{`}} prune {{`}}`}}"
+          selfHeal: "{{`{{`}} selfHeal {{`}}`}}"

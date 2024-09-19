@@ -1,0 +1,26 @@
+appset:
+  clustername: clustertest
+  argoProject: exploitation
+  default:
+    ServerSideApply: true
+    CreateNamespace: true
+    repoUrl: "https://github.com/cloud-pi-native/cluster-automation.git"
+    branch: "main"
+    syncPolicy:
+      autoSync: true
+      prune: true
+      selfHeal: true  
+
+components:
+  - name: metallb
+    namespace: infra-metallb-system
+    branch: release-1.0
+    syncPolicyPrune: "false"
+    syncPolicySelfHeal: "false"
+    ServerSideApply: "false"
+    destination: test
+  - name: nginx
+    namespace: infra-nginx-system
+    branch: main
+  - name: nettools
+    namespace: infra-nettools

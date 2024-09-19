@@ -18,10 +18,10 @@ spec:
       source:
         repoURL: '{{ .config.repoUrl }}'
         targetRevision: '{{ .config.targetRevision }}'
-        path: app/nettools
+        path: app/appset
         helm:
           valueFiles: 
-            - "../../cluster/{{ .cluster.name }}/values-nettools.yaml"
+            - "../../cluster/{{ .cluster.name }}/values.yaml"
       destination:
         server: '{{.cluster.address}}'
         namespace: infra-argo

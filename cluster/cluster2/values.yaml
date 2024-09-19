@@ -1,0 +1,19 @@
+appset:
+  clustername: cluster2
+  argoProject: exploitation
+  default:
+    ServerSideApply: true
+    CreateNamespace: true
+    repoUrl: "https://github.com/cloud-pi-native/cluster-automation.git"
+    branch: "main"
+    syncPolicy:
+      autoSync: true
+      prune: true
+      selfHeal: true  
+
+components:
+  - name: nginx
+    namespace: infra-nginx-system
+    branch: main
+  - name: nettools
+    namespace: infra-nettools
