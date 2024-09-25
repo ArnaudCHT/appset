@@ -24,7 +24,7 @@ spec:
         {{- end }}
   template:
     metadata:
-      name: "{{`{{`}} .app {{`}}`}}"-{{ .Values.appset.clustername }}
+      name: "{{`{{`}} .app {{`}}`}}-{{ .Values.appset.clustername }}"
     spec:
       project: "{{ .Values.appset.argoProject }}"
       source:
