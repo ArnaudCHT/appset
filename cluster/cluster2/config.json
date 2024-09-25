@@ -4,7 +4,7 @@
       "address": "https://api.dso-formation.hp.numerique-interieur.com:6443"
     },
     "config": {
-      "project": "exploitation",
+      "project": "default",
       "targetRevision": "main",
       "repoUrl": "https://github.com/ArnaudCHT/appset.git",
       "serverSideApply": "true",
