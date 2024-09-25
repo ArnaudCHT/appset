@@ -24,16 +24,16 @@ spec:
         {{- end }}
   template:
     metadata:
-      name: "{{`{{`}} app {{`}}`}}"
+      name: "{{`{{`}} .app {{`}}`}}"
     spec:
       project: "{{ .Values.appset.argoProject }}"
       source:
-        repoURL: "{{`{{`}} repoUrl {{`}}`}}"
-        targetRevision: "{{`{{`}} branch {{`}}`}}"
-        path: "apps/{{`{{`}} app {{`}}`}}" 
+        repoURL: "{{`{{`}} .repoUrl {{`}}`}}"
+        targetRevision: "{{`{{`}} .branch {{`}}`}}"
+        path: "apps/{{`{{`}} .app {{`}}`}}" 
         helm:
           valueFiles: 
-            - "../../clusters/{{ .Values.appset.clustername }}/values-{{`{{`}} app {{`}}`}}.yaml"
+            - "../../clusters/{{ .Values.appset.clustername }}/values-{{`{{`}} .app {{`}}`}}.yaml"
       destination:
-        namespace: "{{`{{`}} namespace {{`}}`}}"
+        namespace: "{{`{{`}} .namespace {{`}}`}}"
         server: {{ .Values.appset.destination }}
