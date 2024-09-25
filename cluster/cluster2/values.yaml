@@ -1,6 +1,7 @@
 appset:
   clustername: cluster2
   argoProject: exploitation
+  destination: https://api.dso-formation.hp.numerique-interieur.com:6443
   type: test
   default:
     ServerSideApply: true

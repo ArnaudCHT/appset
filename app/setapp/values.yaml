@@ -2,6 +2,7 @@ appset:
   clustername: clustertest
   argoProject: exploitation
   type: test  # Peut être 'okd', 'rke', ou 'ocp'
+  destination: https://kubernetes.default.svc
   default:
     branch: "main"
     repoUrl: "https://github.com/cloud-pi-native/cluster-automation.git"
@@ -13,9 +14,6 @@ appset:
 
   # Composants personnalisés à ajouter ou surcharger
   customComponents:
-    cert-manager:
-      namespace: cert-manager
-      repoUrl: "https://bonjour.git"
     nginx:
       namespace: infra-nginx-system
       branch: "custom-branch"

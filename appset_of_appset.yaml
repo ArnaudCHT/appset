@@ -25,4 +25,11 @@ spec:
       destination:
         server: '{{.cluster.address}}'
         namespace: infra-argo
+      syncPolicy:
+        syncOptions:
+          - CreateNamespace=true
+          - ServerSideApply=true
+        automated:
+          prune: true
+          selfHeal: true
 
