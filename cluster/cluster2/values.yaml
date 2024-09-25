@@ -1,6 +1,6 @@
 appset:
   clustername: cluster2
-  argoProject: exploitation
+  argoProject: formation
   destination: https://api.dso-formation.hp.numerique-interieur.com:6443
   type: test
   default:
