@@ -36,4 +36,4 @@ spec:
             - "../../cluster/{{ .Values.appset.clustername }}/values-{{`{{`}} .app {{`}}`}}.yaml"
       destination:
         namespace: "{{`{{`}} .namespace {{`}}`}}"
-        name: {{ .Values.appset.destination }}
+        server: {{ .Values.appset.destination }}

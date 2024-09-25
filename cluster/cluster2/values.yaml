@@ -1,7 +1,7 @@
 appset:
   clustername: cluster2
   argoProject: default
-  destination: formation-ovh
+  destination: https://api.dso-formation.hp.numerique-interieur.com:6443
   type: test
   default:
     ServerSideApply: true
