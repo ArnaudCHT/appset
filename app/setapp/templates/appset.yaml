@@ -4,6 +4,7 @@ metadata:
   name: {{ include "appset.fullname" . }}-{{ .Values.appset.clustername }}
   namespace: {{ include "appset.namespace" . }}
 spec:
+  goTemplate: true
   generators:
     - list:
         elements:
