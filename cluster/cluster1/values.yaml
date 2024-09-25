@@ -1,7 +1,7 @@
 appset:
   clustername: cluster1
   argoProject: exploitation
-  destination: https://kubernetes.default.svc
+  destination: in-cluster
   type: test
   default:
     ServerSideApply: true
