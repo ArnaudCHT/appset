@@ -23,7 +23,7 @@ spec:
           valueFiles: 
             - "../../cluster/{{ .cluster.name }}/values.yaml"
       destination:
-        server: '{{.cluster.address}}'
+        name: in-cluster
         namespace: infra-argo
       syncPolicy:
         syncOptions:
