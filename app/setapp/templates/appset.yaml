@@ -33,7 +33,7 @@ spec:
         path: "app/{{`{{`}} .app {{`}}`}}" 
         helm:
           valueFiles: 
-            - "../../clusters/{{ .Values.appset.clustername }}/values-{{`{{`}} .app {{`}}`}}.yaml"
+            - "../../cluster/{{ .Values.appset.clustername }}/values-{{`{{`}} .app {{`}}`}}.yaml"
       destination:
         namespace: "{{`{{`}} .namespace {{`}}`}}"
         server: {{ .Values.appset.destination }}
