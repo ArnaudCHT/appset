@@ -1,7 +1,7 @@
 {
     "cluster": {
       "name": "cluster2",
-      "address": "https://kubernetes.default.svc"
+      "address": "https://api.dso-formation.hp.numerique-interieur.com:6443"
     },
     "config": {
       "project": "exploitation",

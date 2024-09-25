@@ -1,6 +1,7 @@
 appset:
   clustername: clustertest
   argoProject: exploitation
+  type: okd
   default:
     ServerSideApply: true
     CreateNamespace: true

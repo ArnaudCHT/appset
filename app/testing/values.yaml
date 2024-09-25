@@ -1,0 +1,77 @@
+appset:
+  clustername: clustertest
+  argoProject: exploitation
+  type: okd  # Peut être 'okd', 'rke', ou 'ocp'
+  default:
+    branch: "main"
+    repoUrl: "https://github.com/cloud-pi-native/cluster-automation.git"
+    syncPolicy:
+      prune: true
+      selfHeal: true
+    ServerSideApply: true
+
+  components:
+    # Composants par type de cluster
+    okd:
+      - app: cert-manager
+        namespace: cert-manager
+      - app: observability
+        namespace: infra-obs
+      - app: falco
+        namespace: infra-falco
+      - app: etcd-backup
+        namespace: infra-etcd-backup
+      - app: sops
+        namespace: infra-sops
+      - app: trivy-operator
+        namespace: infra-trivy-system
+      - app: teleport
+        namespace: infra-teleport
+      - app: cortex
+        namespace: infra-cortex
+      - app: logging-monitoring
+        namespace: openshift-monitoring
+
+    rke:
+      - app: metallb
+        namespace: infra-metallb-system
+      - app: ingress-nginx
+        namespace: infra-ingress-nginx
+      - app: cert-manager
+        namespace: cert-manager
+      - app: external-dns-rfc
+        namespace: infra-external-dns-rfc
+      - app: external-dns-scw
+        namespace: infra-external-dns-scw
+      - app: teleport
+        namespace: infra-teleport
+      - app: minio-operator
+        namespace: infra-minio-operator
+      - app: loki
+        namespace: infra-loki
+      - app: observability
+        namespace: infra-obs
+      - app: cortex
+        namespace: infra-cortex
+
+    ocp:
+      - app: cert-manager
+        namespace: cert-manager
+      - app: logging
+        namespace: infra-logging
+      - app: monitoring
+        namespace: infra-monitoring
+      - app: other-app
+        namespace: infra-other-app
+    
+    test:
+      - app: other-app
+        namespace: infra-other-app
+      - app: nettools
+        namespace: infra-nettools    
+
+  # Composants supplémentaires qui surchargent ou complètent la liste ci-dessus
+  customComponents:
+    - app: nginx
+      namespace: infra-nginx-system
+      branch: "custom-branch"

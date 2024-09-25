@@ -1,0 +1,35 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: {{ include "appset.fullname" . }}-{{ .Values.appset.clustername }}
+  namespace: {{ include "appset.namespace" . }}
+spec:
+  generators:
+    - list:
+        elements:
+        # Sélectionner les composants spécifiques au type de cluster
+        {{- $typeComponents := index .Values.appset.components .Values.appset.type }}
+        # Fusionner avec les composants personnalisés (s'ils existent)
+        {{- range $index, $component := merge $typeComponents .Values.appset.customComponents }}
+        - app: {{ $component.app }}
+          namespace: {{ $component.namespace }}
+          branch: {{ $component.branch | default $.Values.appset.default.branch }}
+          repoUrl: {{ $component.repoUrl | default $.Values.appset.default.repoUrl }}
+          prune: {{ $component.prune | default $.Values.appset.default.syncPolicy.prune }}
+          selfHeal: {{ $component.selfHeal | default $.Values.appset.default.syncPolicy.selfHeal }}
+          ServerSideApply: {{ $component.ServerSideApply | default $.Values.appset.default.ServerSideApply }}
+        {{- end }}
+  template:
+    metadata:
+      name: "{{`{{`}} app {{`}}`}}"
+    spec:
+      project: "{{ .Values.appset.argoProject }}"
+      source:
+        repoURL: "{{`{{`}} repoUrl {{`}}`}}"
+        targetRevision: "{{`{{`}} branch {{`}}`}}"
+        path: "apps/{{`{{`}} app {{`}}`}}" 
+        helm:
+          valueFiles: 
+            - "../../clusters/{{ .Values.appset.clustername }}/values-{{`{{`}} app {{`}}`}}.yaml"
+      destination:
+        namespace: "{{`{{`}} namespace {{`}}`}}"

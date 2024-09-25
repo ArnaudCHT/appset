@@ -1,0 +1,19 @@
+components: 
+- app: cert-manager
+  namespace: cert-manager
+- app: observability
+  namespace: infra-obs
+- app: falco
+  namespace: infra-falco
+- app: etcd-backup
+  namespace: infra-etcd-backup
+- app: sops
+  namespace: infra-sops
+- app: trivy-operator
+  namespace: infra-trivy-system
+- app: teleport
+  namespace: infra-teleport
+- app: cortex
+  namespace: infra-cortex
+- app: logging-monitoring
+  namespace: openshift-monitoring

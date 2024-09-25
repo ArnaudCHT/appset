@@ -1,0 +1,80 @@
+appset:
+  clustername: clustertest
+  argoProject: exploitation
+  type: test  # Peut être 'okd', 'rke', ou 'ocp'
+  default:
+    branch: "main"
+    repoUrl: "https://github.com/cloud-pi-native/cluster-automation.git"
+    syncPolicy:
+      prune: true
+      selfHeal: true
+    ServerSideApply: true
+
+
+  # Composants personnalisés à ajouter ou surcharger
+  customComponents:
+    cert-manager:
+      namespace: cert-manager
+      repoUrl: "https://bonjour.git"
+    nginx:
+      namespace: infra-nginx-system
+      branch: "custom-branch"
+
+  # Composants par type de cluster, avec des maps
+  components:
+    test:
+      nettools:
+        namespace: infra-nettools
+    okd:
+      cert-manager:
+        namespace: cert-manager
+      observability:
+        namespace: infra-obs
+      falco:
+        namespace: infra-falco
+      etcd-backup:
+        namespace: infra-etcd-backup
+      sops:
+        namespace: infra-sops
+      trivy-operator:
+        namespace: infra-trivy-system
+      teleport:
+        namespace: infra-teleport
+      cortex:
+        namespace: infra-cortex
+      logging-monitoring:
+        namespace: openshift-monitoring
+      velero-okd:
+        namespace: infra-velero
+
+    rke:
+      metallb:
+        namespace: infra-metallb-system
+      ingress-nginx:
+        namespace: infra-ingress-nginx
+      cert-manager:
+        namespace: cert-manager
+      external-dns-rfc:
+        namespace: infra-external-dns-rfc
+      external-dns-scw:
+        namespace: infra-external-dns-scw
+      teleport:
+        namespace: infra-teleport
+      minio-operator:
+        namespace: infra-minio-operator
+      loki:
+        namespace: infra-loki
+      observability:
+        namespace: infra-obs
+      cortex:
+        namespace: infra-cortex
+
+    ocp:
+      cert-manager:
+        namespace: cert-manager
+      logging:
+        namespace: infra-logging
+      monitoring:
+        namespace: infra-monitoring
+      other-app:
+        namespace: infra-other-app

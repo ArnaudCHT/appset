@@ -1,6 +1,7 @@
 appset:
   clustername: cluster1
   argoProject: exploitation
+  type: ocp
   default:
     ServerSideApply: true
     CreateNamespace: true
@@ -11,9 +12,4 @@ appset:
       prune: true
       selfHeal: true  
 
-components:
-  - name: nginx
-    namespace: infra-nginx-system
-    branch: main
-  - name: nettools
-    namespace: infra-nettools
+
