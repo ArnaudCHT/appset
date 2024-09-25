@@ -25,6 +25,7 @@ appset:
     test:
       nettools:
         namespace: infra-nettools
+
     okd:
       cert-manager:
         namespace: cert-manager

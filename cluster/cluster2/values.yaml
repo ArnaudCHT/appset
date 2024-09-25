@@ -1,20 +1,20 @@
 appset:
   clustername: cluster2
   argoProject: exploitation
-  type: okd
+  type: test
   default:
     ServerSideApply: true
     CreateNamespace: true
-    repoUrl: "https://github.com/cloud-pi-native/cluster-automation.git"
+    repoUrl: "https://github.com/ArnaudCHT/appset.git"
     branch: "main"
     syncPolicy:
       autoSync: true
       prune: true
       selfHeal: true  
 
-components:
-  - name: nginx
-    namespace: infra-nginx-system
-    branch: main
-  - name: nettools
-    namespace: infra-nettools
+  customComponents:
+    nginx:
+      namespace: infra-nginx-system
+      branch: main
+    nettools:
+      namespace: infra-nettools
