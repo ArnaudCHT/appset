@@ -30,7 +30,7 @@ spec:
       source:
         repoURL: "{{`{{`}} .repoUrl {{`}}`}}"
         targetRevision: "{{`{{`}} .branch {{`}}`}}"
-        path: "apps/{{`{{`}} .app {{`}}`}}" 
+        path: "app/{{`{{`}} .app {{`}}`}}" 
         helm:
           valueFiles: 
             - "../../clusters/{{ .Values.appset.clustername }}/values-{{`{{`}} .app {{`}}`}}.yaml"
