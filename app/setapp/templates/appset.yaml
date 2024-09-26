@@ -37,3 +37,18 @@ spec:
       destination:
         namespace: "{{`{{`}} .namespace {{`}}`}}"
         server: {{ .Values.appset.destination }}
+  templatePatch: |
+    spec:
+      source:
+      syncPolicy:
+        syncOptions:
+          - CreateNamespace=true
+    {{- if .ServerSideApply }}
+          - ServerSideApply=true
+    {{- end }}      
+    {{- if .selfHeal }}
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+    {{- end }}
