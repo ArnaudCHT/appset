@@ -43,12 +43,12 @@ spec:
       syncPolicy:
         syncOptions:
           - CreateNamespace=true
-    {{- if .ServerSideApply }}
+    {{ printf {{- if .ServerSideApply }} }}
           - ServerSideApply=true
-    {{- end }}
-    {{- if .prune }}
+    {{ printf {{- end }} }}
+    {{ printf {{- if .prune }} }}
       syncPolicy:
         automated:
           prune: true
           selfHeal: true
-    {{- end }}
+    {{ printf {{- end }} }}
