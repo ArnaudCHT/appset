@@ -45,8 +45,8 @@ spec:
           - CreateNamespace=true
     {{- if .ServerSideApply }}
           - ServerSideApply=true
-    {{- end }}      
-    {{- if .selfHeal }}
+    {{- end }}
+    {{- if .prune }}
       syncPolicy:
         automated:
           prune: true

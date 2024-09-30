@@ -1,0 +1,35 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: appset-of-appset
+spec:
+  goTemplate: true
+  generators:
+    - git:
+        repoURL: https://github.com/ArnaudCHT/appset.git
+        revision: main
+        files:
+        - path: "cluster/**/values.yaml"
+  template:
+    metadata:
+      name: '{{.appset.clustername}}-test'
+    spec:
+      project: '{{ .appset.argoProject }}'
+      source:
+        repoURL: '{{ .appset.default.repoUrl }}'
+        targetRevision: '{{ .appset.default.branch }}'
+        path: app/setapp
+        helm:
+          valueFiles: 
+            - "../../cluster/{{ .appset.clustername }}/values.yaml"
+      destination:
+        name: in-cluster
+        namespace: infra-argo
+      syncPolicy:
+        syncOptions:
+          - CreateNamespace=true
+          - ServerSideApply=true
+        automated:
+          prune: true
+          selfHeal: true
+

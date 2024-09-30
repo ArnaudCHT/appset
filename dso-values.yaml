@@ -1,0 +1,81 @@
+global:
+  domain: argocd.shared.hp.numerique-interieur.com
+
+applicationSet:
+  enabled: true
+  replicas: 2
+  webhook:
+    ingress:
+      ingressClassName: openshift-default
+configs:
+  cm:
+    clusterResources: "true"
+    kustomize.buildOptions: --enable-helm
+    resource.exclusions: |
+      - apiGroups:
+        - tekton.dev
+        clusters:
+        - '*'
+        kinds:
+        - TaskRun
+        - PipelineRun
+      - apiGroups:
+        - kyverno.io
+        - wgpolicyk8s.io
+        - aquasecurity.github.io
+        clusters:
+        - '*'
+        kinds:
+        - '*'
+      - apiGroups:
+        - postgresql.cnpg.io
+        clusters:
+        - '*'
+        kinds:
+        - Backup
+  params:
+    server.insecure: true
+#  secret:
+#    argocdServerAdminPassword: 4574sfd-fsdfs5
+controller:
+  replicas: 2
+crds:
+  install: false
+  keep: true
+dex:
+  enabled: false
+notifications:
+  enabled: false
+  webhook:
+    ingress:
+      ingressClassName: openshift-default
+openshift:
+  enabled: true
+redis-ha:
+  containerSecurityContext:
+    runAsGroup: null
+    runAsUser: null
+  enabled: true
+  haproxy:
+    containerSecurityContext:
+      runAsGroup: null
+      runAsUser: null
+repoServer:
+  replicas: 2
+server:
+  ingress:
+    enabled: true
+    ingressClassName: nginx
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt-prod
+      nginx.ingress.kubernetes.io/backend-protocol: HTTP
+      nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+    tls: true
+  ingressGrpc:
+    ingressClassName: nginx
+  metrics:
+    enabled: true
+    serviceMonitor:
+      enabled: true
+      interval: 60s
+  replicas: 2

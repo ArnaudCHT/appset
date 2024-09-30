@@ -1,0 +1,60 @@
+global:
+  domain: argocd.shared.hp.numerique-interieur.com
+
+server:
+  insecure: true
+  service:
+    type: ClusterIP  # Utilisation de ClusterIP pour le service ArgoCD server
+  certificate:
+    # -- Deploy a Certificate resource (requires cert-manager)
+    enabled: false
+    # -- The name of the Secret that will be automatically created and managed by this Certificate resource
+    secretName: argocd-server-tls
+    # -- Certificate primary domain (commonName)
+    domain: argocd.shared.hp.numerique-interieur.com
+    # Certificate issuer
+    ## Ref: https://cert-manager.io/docs/concepts/issuer
+    issuer:
+      # -- Certificate issuer group. Set if using an external issuer. Eg. `cert-manager.io`
+      group: "cert-manager.io"
+      # -- Certificate issuer kind. Either `Issuer` or `ClusterIssuer`
+      kind: "ClusterIssuer"
+      # -- Certificate issuer name. Eg. `letsencrypt`
+      name: "letsencrypt-prod"
+  metrics:
+    enabled: true
+    serviceMonitor:
+      enabled: true
+      interval: 60s
+  replicas: 2
+
+  ingress:
+    enabled: true
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt-prod
+      nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+    ingressClassName: nginx
+    hosts:
+      - argocd.shared.hp.numerique-interieur.com
+    tls:
+      - hosts:
+          - argocd.shared.hp.numerique-interieur.com
+        secretName: argocd-server-tls
+    # -- Uses `server.service.servicePortHttps` instead `server.service.servicePortHttp`
+    https: false      
+  extraArgs:
+    - --insecure # Pour accepter des connexions non sécurisées
+
+repoServer:
+  replicas: 2
+
+applicationSet:
+  replicas: 2
+
+crds:
+  install: false
+  keep: true
+dex:
+  enabled: false
+notifications:
+  enabled: false

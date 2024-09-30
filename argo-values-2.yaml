@@ -1,0 +1,42 @@
+global:
+  domain: argocd.shared.hp.numerique-interieur.com
+
+redis-ha:
+  enabled: true
+  haproxy:
+    enabled: false
+
+controller:
+  replicas: 1
+
+server:
+  ingress:
+    enabled: true
+    ingressClassName: nginx
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt-prod
+      nginx.ingress.kubernetes.io/backend-protocol: HTTP
+      nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+    tls: true
+  ingressGrpc:
+    ingressClassName: nginx
+  metrics:
+    enabled: true
+    serviceMonitor:
+      enabled: true
+      interval: 60s
+  replicas: 2
+
+repoServer:
+  replicas: 2
+
+applicationSet:
+  replicas: 2
+
+crds:
+  install: false
+  keep: true
+dex:
+  enabled: false
+notifications:
+  enabled: false

@@ -1,0 +1,143 @@
+global:
+  domain: argocd.shared.hp.numerique-interieur.com
+
+applicationSet:
+  enabled: true
+  metrics:
+    enabled: true
+    serviceMonitor:
+      enabled: true
+      interval: 60s
+  replicas: 2
+  webhook:
+    ingress:
+      ingressClassName: openshift-default
+configs:
+  cm:
+    admin.enabled: "True"
+    clusterResources: "true"
+    kustomize.buildOptions: --enable-helm
+    resource.exclusions: |
+      - apiGroups:
+        - tekton.dev
+        clusters:
+        - '*'
+        kinds:
+        - TaskRun
+        - PipelineRun
+      - apiGroups:
+        - kyverno.io
+        - wgpolicyk8s.io
+        - aquasecurity.github.io
+        clusters:
+        - '*'
+        kinds:
+        - '*'
+      - apiGroups:
+        - postgresql.cnpg.io
+        clusters:
+        - '*'
+        kinds:
+        - Backup
+    #url: https://argocd.shared.hp.numerique-interieur.com
+    #users.anonymous.enabled: "false"
+  params:
+    server.insecure: true
+#  rbac:
+    #admin.enabled: "true"
+#    policy.csv: |
+#      p, role:admin, *, *, */*, allow
+#      p, role:nada, applicationsets, *, */*, deny
+#      p, role:nada, applications, *, */*, deny
+#      p, role:nada, logs, *, */*, deny
+#      p, role:nada, exec, *, */*, deny
+#      p, role:nada, certificates, *, *, deny
+#      p, role:nada, accounts, *, *, deny
+#      p, role:nada, gpgkeys, *, *, deny
+#      p, role:nada, projects, *, *, deny
+#      p, role:nada, clusters, *, *, deny
+#      p, role:nada, repositories, get, *, allow
+#      g, system:cluster-admins, role:admin
+#      g, cluster-admins, role:admin
+#      g, /ArgoCDAdmins, role:admin
+#      g, ArgoCDAdmins, role:admin
+#    policy.default: role:nada
+#    scopes: '[groups]'
+  secret:
+    # -- Create the argocd-secret
+    createSecret: true
+    #argocdServerAdminPassword: "$2a$10$Rdo.0InDgj409xqNLsISIOsDv09vAH.8K00.qYhukl1XqrZxzD9/G"
+controller:
+  metrics:
+    enabled: true
+    serviceMonitor:
+      enabled: true
+      interval: 60s
+  replicas: 1
+crds:
+  install: false
+  keep: true
+dex:
+  enabled: false
+notifications:
+  enabled: false
+  metrics:
+    enabled: false
+    serviceMonitor:
+      enabled: true
+      interval: 60s
+  webhook:
+    ingress:
+      ingressClassName: openshift-default
+openshift:
+  enabled: false
+redis:
+  metrics:
+    enabled: false
+    serviceMonitor:
+      enabled: false
+      interval: 60s
+redis-ha:
+#  containerSecurityContext:
+#    runAsGroup: null
+#    runAsUser: null
+  enabled: true
+  exporter:
+    enabled: true
+    serviceMonitor:
+      enabled: true
+      interval: 60s
+  haproxy:
+    enabled: false
+#    containerSecurityContext:
+#      runAsGroup: null
+#      runAsUser: null
+#    metrics:
+#      enabled: true
+#      serviceMonitor:
+#        enabled: true
+#        interval: 60s
+repoServer:
+  metrics:
+    enabled: true
+    serviceMonitor:
+      enabled: true
+      interval: 60s
+  replicas: 2
+server:
+  ingress:
+    enabled: true
+    ingressClassName: nginx
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt-prod
+      nginx.ingress.kubernetes.io/backend-protocol: HTTP
+      nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+    tls: true
+  ingressGrpc:
+    ingressClassName: nginx
+  metrics:
+    enabled: true
+    serviceMonitor:
+      enabled: true
+      interval: 60s
+  replicas: 2
