@@ -40,7 +40,7 @@ spec:
         server: {{ .Values.appset.destination }}
   templatePatch: |
     spec:
-      source:x
+      source:
       syncPolicy:
         syncOptions:
           - CreateNamespace=true
