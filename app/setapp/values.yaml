@@ -45,6 +45,12 @@ appset:
         namespace: openshift-monitoring
       velero-okd:
         namespace: infra-velero
+      cnpg-operator: 
+        namespace: infra-cnpg-system 
+      kyverno:
+        namespace: infra-kyverno
+      security:
+        namespace: infra-security
 
     rke:
       metallb:
@@ -77,3 +83,7 @@ appset:
         namespace: infra-monitoring
       other-app:
         namespace: infra-other-app
+      velero-okd:
+        namespace: infra-velero
+      cnpg-operator: 
+        namespace: infra-cnpg-system 

@@ -19,6 +19,7 @@ spec:
           branch: {{ $component.branch | default $.Values.appset.default.branch }}
           repoUrl: {{ $component.repoUrl | default $.Values.appset.default.repoUrl }}
           prune: {{ $component.prune | default $.Values.appset.default.syncPolicy.prune }}
+          autoSync: {{ $component.autoSync | default $.Values.appset.default.syncPolicy.autoSync }}
           selfHeal: {{ $component.selfHeal | default $.Values.appset.default.syncPolicy.selfHeal }}
           ServerSideApply: {{ $component.ServerSideApply | default $.Values.appset.default.ServerSideApply }}
         {{- end }}
@@ -39,14 +40,14 @@ spec:
         server: {{ .Values.appset.destination }}
   templatePatch: |
     spec:
-      source:
+      source:x
       syncPolicy:
         syncOptions:
           - CreateNamespace=true
     {{`{{- if .ServerSideApply }}`}}
           - ServerSideApply=true
     {{`{{- end }}`}}
-    {{`{{- if .prune }}`}}
+    {{`{{- if .autoSync }}`}}
       syncPolicy:
         automated:
           prune: true
