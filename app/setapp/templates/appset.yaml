@@ -40,7 +40,6 @@ spec:
         server: {{ .Values.appset.destination }}
   templatePatch: |
     spec:
-      source:
       syncPolicy:
         syncOptions:
           - CreateNamespace=true
@@ -48,8 +47,7 @@ spec:
           - ServerSideApply=true
     {{`{{- end }}`}}
     {{`{{- if .autoSync }}`}}
-      syncPolicy:
         automated:
-          prune: true
-          selfHeal: true
+          prune: {{`{{ .prune }}`}}
+          selfHeal: {{`{{ .selfHeal }}`}}
     {{`{{- end }}`}}
